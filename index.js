@@ -848,6 +848,15 @@ module.exports = ( plugin_options, context ) => ({
 
 		// -------------------------------------------------------------------------
 		
+		// Grabs the meta description tag since VuePress overrides the description key for some reason.
+		if (typeof frontmatter.meta !== 'undefined') {
+			for (const [key, value] of Object.entries(frontmatter.meta)) {
+				if (value.name === 'description') {
+					frontmatter.description = value.content;
+				}
+			}
+		}
+		
 		frontmatter.description = frontmatter.description || PLUGIN.get_default_description( $page, options );
 
 		// -------------------------------------------------------------------------
